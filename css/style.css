@@ -50,7 +50,6 @@ body {
   clear: both; }
 
 #content {
-  text-align: center;
   overflow: auto;
   width: 80%;
   background-color: #fff;
@@ -62,7 +61,6 @@ body {
 
 h1 {
   color: #000;
-  text-align: center;
 }
 
 h2 {
