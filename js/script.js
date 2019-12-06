@@ -1,28 +1,26 @@
 $(function () {
-  //$.get(), $.post(), $.ajax(), $.getJSON()
 
-  //***Retrieving Flicker Images Through the Flickr API***
-  //JSON data format: this is the normal javascript object notation {key: value, key2: value}
-  //using the $.getJSON()
-  let flikrAPIUrl = "https://www.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+  //***Retrieving Pokemon Data from the PokeAPI***
+  var pokeapi = "https://pokeapi.co/api/v2/generation/1";
 
-  $.getJSON(flikrAPIUrl, {
-    //options
-    tags: "sun, beach",
-    tagmode: "any",
-    format: "json"
-  }).done(function (data) {
-    //success
-    console.log(data);
-    $.each(data.items, function (index, item) {
-      console.log(item);
-      $("<img>").attr("src", item.media.m).appendTo("#flickr");
-      if(index === 4) {
-        return false;
-      }
+  $.getJSON(pokeapi).done(function(data) {
+    console.log(data);  // Explore available data in the Developer Tools Console
+    $.each(data.pokemon_species, function(index, pokemon) {
+      var name = capitalize(pokemon.name);
+      var paragraph = $("<p>").html("Pokémon species no. " + (index+1) + " is " + name);
+      paragraph.appendTo("#pokedex");
     });
-  }).fail(function () {
-    //failure
-    alert("Ajax call failed.");
-  })
+  }).fail(function() {
+    // Handle error case
+    console.log("Call to PokéAPI failed.");
+  }).always(function() {
+    // Will always be executed (in either case).
+    console.log("Pokémon is awesome.")
+  });
+
 });
+
+// Capitalizes a given string.
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
